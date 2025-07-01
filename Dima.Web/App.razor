@@ -1,0 +1,23 @@
+﻿<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <h1>Vicê não tem acesso a esta funcionalidade</h1>
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </Found>
+        <NotFound>
+            <PageTitle>Página não encontrada</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <div style="text-align:center; padding: 4rem;">
+                    <h1 style="font-size: 4rem; color: #dc3545;">Erro 404</h1>
+                    <p style="font-size: 1.5rem; color: #6c757d;">A página que você está tentando acessar não existe.</p>
+                    <p style="color: #6c757d;">Verifique se o endereço está correto ou volte para a página inicial.</p>
+                    <a href="/" style="margin-top: 2rem; display: inline-block; padding: 0.75rem 1.5rem; background-color: #007bff; color: white; text-decoration: none; border-radius: 0.25rem;">Voltar para a Home</a>
+                </div>
+            </LayoutView>
+        </NotFound>
+    </Router>
+
+</CascadingAuthenticationState>
