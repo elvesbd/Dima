@@ -1,6 +1,7 @@
 using Dima.Api.Common.Api;
 using Dima.Api.Endpoints.Categories;
 using Dima.Api.Endpoints.Identity;
+using Dima.Api.Endpoints.Reports;
 using Dima.Api.Endpoints.Transactions;
 using Dima.Api.Models;
 
@@ -33,6 +34,14 @@ public static class Endpoint
             .MapEndpoint<DeleteTransactionEndpoint>()
             .MapEndpoint<GetTransactionByIdEndpoint>()
             .MapEndpoint<GetTransactionsByPeriod>();
+
+        endpoints.MapGroup("/reports")
+            .WithTags("Reports")
+            .RequireAuthorization()
+            .MapEndpoint<GetExpensesByCategoryEndpoint>()
+            .MapEndpoint<GetFinancialSummaryEndpoint>()
+            .MapEndpoint<GetIncomeAndExpensesEndpoint>()
+            .MapEndpoint<GetIncomesByCategoryEndpoint>();
         
         endpoints.MapGroup("/identity")
             .WithTags("Identity")

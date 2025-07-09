@@ -8,19 +8,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Handlers.Reports;
 
-public class ReportsHandler(AppDbContext context) : IReportHandler
+public class ReportsHandler(AppDbContext context) : IReportsHandler
 {
     public async Task<Response<FinancialSummary?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request)
     {
+        await Task.Delay(3280);
+        var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
         try
         {
-            var startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             var data = await context
                 .Transactions
                 .AsNoTracking()
                 .Where(x => x.UserId == request.UserId
-                            && x.PaidOrReceived >= startDate
-                            && x.PaidOrReceived <= DateTime.Now)
+                      && x.PaidOrReceived >= startDate
+                      && x.PaidOrReceived <= DateTime.Now)
                 .GroupBy(x => 1)
                 .Select(x => new FinancialSummary(
                     request.UserId,
