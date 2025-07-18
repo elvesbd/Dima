@@ -28,6 +28,7 @@ builder.Services.AddHttpClient(Configuration.HttpClientName, opt =>
     opt.BaseAddress = new Uri(Configuration.BackendUrl);
 }).AddHttpMessageHandler<CookieHandler>();
 
+builder.Services.AddTransient<IReportsHandler, ReportHandler>();
 builder.Services.AddTransient<IAccountHandler, AccountHandler>();
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();

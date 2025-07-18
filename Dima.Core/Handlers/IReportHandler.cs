@@ -4,7 +4,7 @@ using Dima.Core.Responses;
 
 namespace Dima.Core.Handlers;
 
-public interface IReportHandler
+public interface IReportsHandler
 {
     Task<Response<FinancialSummary?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request);
     Task<Response<List<IncomesByCategory>?>> GetIncomesByCategoryReportAsync(GetIncomesByCategoryRequest request);
