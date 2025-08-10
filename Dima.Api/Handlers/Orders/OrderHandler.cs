@@ -21,7 +21,7 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
             if (order is null)
                 return new Response<Order?>(null, 404,  "Order not found");
         }
-        catch (Exception e)
+        catch
         {
            return new Response<Order?>(null, 500,  "Not able to get order");
         }

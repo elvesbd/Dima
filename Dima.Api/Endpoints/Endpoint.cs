@@ -1,6 +1,7 @@
 using Dima.Api.Common.Api;
 using Dima.Api.Endpoints.Categories;
 using Dima.Api.Endpoints.Identity;
+using Dima.Api.Endpoints.Orders;
 using Dima.Api.Endpoints.Reports;
 using Dima.Api.Endpoints.Transactions;
 using Dima.Api.Models;
@@ -42,6 +43,27 @@ public static class Endpoint
             .MapEndpoint<GetFinancialSummaryEndpoint>()
             .MapEndpoint<GetIncomeAndExpensesEndpoint>()
             .MapEndpoint<GetIncomesByCategoryEndpoint>();
+
+        endpoints.MapGroup("/products")
+            .WithTags("Products")
+            .RequireAuthorization()
+            .MapEndpoint<GetAllProductsEndpoint>()
+            .MapEndpoint<GetProductBySlugEndpoint>();
+
+        endpoints.MapGroup("/vouchers")
+            .WithTags("Vouchers")
+            .RequireAuthorization()
+            .MapEndpoint<GetVoucherByNumberEndpoint>();
+        
+        endpoints.MapGroup("/orders")
+            .WithTags("Orders")
+            .RequireAuthorization()
+            .MapEndpoint<CancelOrderEndpoint>()
+            .MapEndpoint<CreateOrderEndpoint>()
+            .MapEndpoint<GetAllOrdersEndpoint>()
+            .MapEndpoint<GetOrderByNumberEndpoint>()
+            .MapEndpoint<PayOrderEndpoint>()
+            .MapEndpoint<RefundOrderEndpoint>();
         
         endpoints.MapGroup("/identity")
             .WithTags("Identity")

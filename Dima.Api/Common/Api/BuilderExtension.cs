@@ -3,6 +3,8 @@ using Dima.Api.Data;
 using Dima.Api.Models;
 using Dima.Core.Handlers;
 using Dima.Api.Handlers.Categories;
+using Dima.Api.Handlers.Orders;
+using Dima.Api.Handlers.Products;
 using Dima.Api.Handlers.Reports;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -73,6 +75,8 @@ public static class BuilderExtension
     
     public static void AddServices(this WebApplicationBuilder builder)
     {
+        builder.Services.AddTransient<IOrderHandler, OrderHandler>();
+        builder.Services.AddTransient<IProductHandler, ProductHandler>();
         builder.Services.AddTransient<IReportsHandler, ReportsHandler>();
         builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
         builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
