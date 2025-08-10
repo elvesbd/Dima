@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Dima.Core\Dima.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Endpoints\Orders\" />
+  </ItemGroup>
+
 </Project>

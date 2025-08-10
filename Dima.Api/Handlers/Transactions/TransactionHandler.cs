@@ -35,14 +35,14 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
             return new Response<Transaction?>(
                 transaction,
                 201,
-                message: "Transaction created");
+                "Transaction created");
         }
         catch
         {
             return new Response<Transaction?>(
                 null,
                 500,
-                message: "Not able to create transaction");
+                "Not able to create transaction");
         }
     }
 
