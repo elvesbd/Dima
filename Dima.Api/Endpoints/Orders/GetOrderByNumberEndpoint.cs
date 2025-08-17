@@ -7,7 +7,7 @@ using Dima.Core.Requests.Orders;
 
 namespace Dima.Api.Endpoints.Orders;
 
-public class GetOrderByNumberEndpoint : IEndpoint
+public abstract class GetOrderByNumberEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/{number}", HandleAsync)

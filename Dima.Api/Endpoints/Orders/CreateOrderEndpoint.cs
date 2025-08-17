@@ -7,7 +7,7 @@ using Dima.Core.Requests.Orders;
 
 namespace Dima.Api.Endpoints.Orders;
 
-public class CreateOrderEndpoint : IEndpoint
+public abstract class CreateOrderEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapPost("/", HandleAsync)

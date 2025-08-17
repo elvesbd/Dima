@@ -16,6 +16,8 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
         try
         {
             order = await context.Orders
+                .Include(x => x.Product)
+                .Include(x => x.Voucher)
                 .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
             
             if (order is null)
@@ -66,6 +68,8 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
         try
         {
             order = await context.Orders
+                .Include(x => x.Product)
+                .Include(x => x.Voucher)
                 .FirstOrDefaultAsync(o => o.Id ==request.Id && o.UserId == request.UserId);
             
             if (order is null) return new Response<Order?>(null, 404, "Order not found");
@@ -223,7 +227,7 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
                 .AsNoTracking()
                 .Include(o => o.Product)
                 .Include(o => o.Voucher)
-                .FirstOrDefaultAsync(o => o.Number == request.Number && o.UserId == request.UserId);;
+                .FirstOrDefaultAsync(o => o.Number == request.Number && o.UserId == request.UserId);
             
             return order is null 
                 ? new Response<Order?>(null, 404, $"Order {request.Number} not found")

@@ -6,7 +6,7 @@ using Dima.Core.Requests.Orders;
 
 namespace Dima.Api.Endpoints.Orders;
 
-public class GetVoucherByNumberEndpoint : IEndpoint
+public abstract class GetVoucherByNumberEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/{number}", HandleAsync)

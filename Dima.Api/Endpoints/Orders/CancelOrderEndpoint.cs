@@ -7,7 +7,7 @@ using Dima.Core.Requests.Orders;
 
 namespace Dima.Api.Endpoints.Orders;
 
-public class CancelOrderEndpoint : IEndpoint
+public abstract class CancelOrderEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapPost("/{id:long}/cancel", HandleAsync)

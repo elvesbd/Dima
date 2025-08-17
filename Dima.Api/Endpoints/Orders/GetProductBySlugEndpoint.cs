@@ -7,7 +7,7 @@ using Dima.Core.Requests.Orders;
 
 namespace Dima.Api.Endpoints.Orders;
 
-public class GetProductBySlugEndpoint : IEndpoint
+public abstract class GetProductBySlugEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/{slug}", HandleAsync)

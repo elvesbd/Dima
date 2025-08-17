@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dima.Api.Endpoints.Transactions;
 
-public class GetTransactionsByPeriod : IEndpoint
+public abstract class GetTransactionsByPeriod : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/", HandleAsync)

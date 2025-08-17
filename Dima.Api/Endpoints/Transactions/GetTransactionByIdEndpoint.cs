@@ -7,7 +7,7 @@ using Dima.Core.Requests.Transactions;
 
 namespace Dima.Api.Endpoints.Transactions;
 
-public class GetTransactionByIdEndpoint : IEndpoint
+public abstract class GetTransactionByIdEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/{id:long}", HandleAsync)

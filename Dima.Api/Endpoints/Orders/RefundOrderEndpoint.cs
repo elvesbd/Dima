@@ -7,7 +7,7 @@ using Dima.Core.Requests.Orders;
 
 namespace Dima.Api.Endpoints.Orders;
 
-public class RefundOrderEndpoint : IEndpoint
+public abstract class RefundOrderEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapPost("/{id:long}/refund", HandleAsync)

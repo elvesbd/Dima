@@ -1,14 +1,15 @@
 using Dima.Core;
 using Dima.Api.Data;
+using Dima.Api.Handlers.Categories;
 using Dima.Api.Models;
 using Dima.Core.Handlers;
-using Dima.Api.Handlers.Categories;
 using Dima.Api.Handlers.Orders;
 using Dima.Api.Handlers.Products;
 using Dima.Api.Handlers.Reports;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Dima.Api.Handlers.Transactions;
+using Dima.Api.Handlers.Vouchers;
 
 namespace Dima.Api.Common.Api;
 
@@ -77,6 +78,7 @@ public static class BuilderExtension
     {
         builder.Services.AddTransient<IOrderHandler, OrderHandler>();
         builder.Services.AddTransient<IProductHandler, ProductHandler>();
+        builder.Services.AddTransient<IVoucherHandler, VoucherHandler>();
         builder.Services.AddTransient<IReportsHandler, ReportsHandler>();
         builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
         builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();

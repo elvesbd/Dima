@@ -8,10 +8,10 @@ using Dima.Core.Requests.Orders;
 
 namespace Dima.Api.Endpoints.Orders;
 
-public class GetAllProductsEndpoint : IEndpoint
+public abstract class GetAllProductsEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
-        => app.MapGet("", HandleAsync)
+        => app.MapGet("/", HandleAsync)
             .WithName("GetAllProducts")
             .WithSummary("Gets all products")
             .WithDescription("Gets all products")
@@ -20,12 +20,12 @@ public class GetAllProductsEndpoint : IEndpoint
     
     private static async Task<IResult> HandleAsync(
         IProductHandler handler,
-        [FromQuery] int pageNUmber = Configuration.DefaultPageNumber,
+        [FromQuery] int pageNumber = Configuration.DefaultPageNumber,
         [FromQuery] int pageSize = Configuration.DefaultPageSize)
     {
         var request = new GetAllProductsRequest
         {
-            PageNumber = pageNUmber,
+            PageNumber = pageNumber,
             PageSize = pageSize
         };
         
