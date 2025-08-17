@@ -1,9 +1,9 @@
-using System.Globalization;
 using Dima.Web;
 using Dima.Web.Handlers;
 using Dima.Web.Security;
 using Dima.Core.Handlers;
 using MudBlazor.Services;
+using System.Globalization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -32,6 +32,9 @@ builder.Services.AddTransient<IReportsHandler, ReportHandler>();
 builder.Services.AddTransient<IAccountHandler, AccountHandler>();
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
+builder.Services.AddTransient<IOrderHandler, OrderHandler>();
+builder.Services.AddTransient<IVoucherHandler, VoucherHandler>();
+builder.Services.AddTransient<IProductHandler, ProductHandler>();
 
 builder.Services.AddLocalization();
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pt-BR");
