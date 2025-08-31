@@ -19,7 +19,7 @@ public class OrderHandler(IHttpClientFactory httpClientFactory) : IOrderHandler
 
     public async Task<Response<Order?>> RefundAsync(RefundOrderRequest request)
     {
-        var result = await _client.PostAsJsonAsync($"$v1/orders/{request.Id}/refund", request);
+        var result = await _client.PostAsJsonAsync($"v1/orders/{request.Id}/refund", request);
 
         return await result.Content.ReadFromJsonAsync<Response<Order?>>()
                ?? new Response<Order?>(null, 400, "Não foi possível pagar o pedido.");
