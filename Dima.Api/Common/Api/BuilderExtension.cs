@@ -1,15 +1,17 @@
+using Stripe;
 using Dima.Core;
 using Dima.Api.Data;
-using Dima.Api.Handlers.Categories;
 using Dima.Api.Models;
 using Dima.Core.Handlers;
 using Dima.Api.Handlers.Orders;
-using Dima.Api.Handlers.Products;
 using Dima.Api.Handlers.Reports;
+using Dima.Api.Handlers.Products;
+using Dima.Api.Handlers.Vouchers;
+using Dima.Api.Handlers.Categories;
+using Dima.Api.Handlers.Stripe;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Dima.Api.Handlers.Transactions;
-using Dima.Api.Handlers.Vouchers;
 
 namespace Dima.Api.Common.Api;
 
@@ -25,6 +27,10 @@ public static class BuilderExtension
             .GetValue<string>("BackEndUrl") ?? string.Empty;
         Configuration.FrontEndUrl = builder.Configuration
             .GetValue<string>("FrontEndUrl") ?? string.Empty;
+        ApiConfiguration.StripeApiKey = builder.Configuration
+            .GetValue<string>("StripeApiKey") ??  string.Empty;
+
+        StripeConfiguration.ApiKey = ApiConfiguration.StripeApiKey;
     }
 
     public static void AddDocumentation(this WebApplicationBuilder builder)
@@ -77,6 +83,7 @@ public static class BuilderExtension
     public static void AddServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddTransient<IOrderHandler, OrderHandler>();
+        builder.Services.AddTransient<IStripeHandler, StripeHandler>();
         builder.Services.AddTransient<IProductHandler, ProductHandler>();
         builder.Services.AddTransient<IVoucherHandler, VoucherHandler>();
         builder.Services.AddTransient<IReportsHandler, ReportsHandler>();

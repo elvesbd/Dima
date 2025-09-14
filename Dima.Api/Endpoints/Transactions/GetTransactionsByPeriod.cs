@@ -13,7 +13,7 @@ public abstract class GetTransactionsByPeriod : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
         => app.MapGet("/", HandleAsync)
-            .WithOrder(4)
+            .WithOrder(5)
             .WithName("GetTransactionByPeriod")
             .WithSummary("Get transaction by period")
             .WithDescription("Get transaction by period")
