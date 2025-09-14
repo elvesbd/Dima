@@ -1,8 +1,10 @@
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
+using Dima.Core.Requests.Stripe;
 using Dima.Web.Pages.Orders;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 
 namespace Dima.Web.Components.Orders;
@@ -23,8 +25,16 @@ public partial class OrderActionComponent : ComponentBase
 
     [Inject]
     public IDialogService DialogService { get; set; } = null!;
+    
+    [Inject]
+    public IJSRuntime JsRuntime { get; set; } = null!;
+    
     [Inject]
     public IOrderHandler OrderHandler { get; set; } =  null!;
+    
+    [Inject]
+    public IStripeHandler StripeHandler { get; set; } = null!;
+    
     [Inject]
     public ISnackbar Snackbar { get; set; } = null!;
 
@@ -82,8 +92,29 @@ public partial class OrderActionComponent : ComponentBase
 
     private async Task PayOrderAsync()
     {
-        await Task.Delay(1);
-        Snackbar.Add("Pagamento não implementado", Severity.Error);
+        var request = new CreateSessionRequest
+        {
+            OrderNumber = Order.Number,
+            OrderTotal = (int)Math.Round(Order.Total * 100, 2),
+            ProductTitle = Order.Product.Title,
+            ProductDescription = Order.Product.Description
+        };
+
+        try
+        {
+            var result = await StripeHandler.CreateSessionAsync(request);
+            if (result.IsSuccess == false || result.Data is null)
+            {
+                Snackbar.Add(result.Message!, Severity.Error);
+                return;
+            }
+
+            await JsRuntime.InvokeVoidAsync("checkout", Configuration.StripePublicKey, result.Data);
+        }
+        catch
+        {
+            Snackbar.Add("Não foi possível iniciar a sessão com o Stripe", Severity.Error);
+        }
     }
     
     private async Task RefundOrderAsync()
