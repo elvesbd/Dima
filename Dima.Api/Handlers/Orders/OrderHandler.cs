@@ -19,7 +19,7 @@ public class OrderHandler(AppDbContext context, IStripeHandler stripeHandler) : 
             order = await context.Orders
                 .Include(x => x.Product)
                 .Include(x => x.Voucher)
-                .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+                .FirstOrDefaultAsync(x => x.Number == request.Number && x.UserId == request.UserId);
             
             if (order is null)
                 return new Response<Order?>(null, 404,  "Order not found");
