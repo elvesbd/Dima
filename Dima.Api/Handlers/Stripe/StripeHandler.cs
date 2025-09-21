@@ -50,8 +50,30 @@ public class StripeHandler : IStripeHandler
         return new Response<string?>(session.Id);
     }
 
-    public Task<Response<List<StripeTransactionResponse>>> GetTransactionsByOrderNumberAsync(GetTransactionsByOrderNumberRequest request)
+    public async Task<Response<List<StripeTransactionResponse>>> GetTransactionsByOrderNumberAsync(GetTransactionsByOrderNumberRequest request)
     {
-        throw new NotImplementedException();
+        var options = new ChargeSearchOptions
+        {
+            Query = $"metadata['order']: '{request.Number}'"
+        };
+        var service = new ChargeService();
+        var result = await service.SearchAsync(options);
+
+        if (result.Data.Count == 0)
+            return new Response<List<StripeTransactionResponse>>(null, 404, "Nenumha transação encontrada");
+        
+        var data = result.Data.Select(item => new StripeTransactionResponse
+            {
+                Id = item.Id,
+                Email = item.BillingDetails.Email,
+                Amount = item.Amount,
+                AmountCaptured = item.AmountCaptured,
+                Status = item.Status,
+                Paid = item.Paid,
+                Refunded = item.Refunded
+            })
+            .ToList();
+
+        return new Response<List<StripeTransactionResponse>>(data);
     }
 }

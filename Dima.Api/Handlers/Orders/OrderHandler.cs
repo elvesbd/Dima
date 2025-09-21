@@ -4,11 +4,12 @@ using Dima.Core.Models;
 using Dima.Core.Handlers;
 using Dima.Core.Responses;
 using Dima.Core.Requests.Orders;
+using Dima.Core.Requests.Stripe;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Handlers.Orders;
 
-public class OrderHandler(AppDbContext context) : IOrderHandler
+public class OrderHandler(AppDbContext context, IStripeHandler stripeHandler) : IOrderHandler
 {
     public async Task<Response<Order?>> PayAsync(PayOrderRequest request)
     {
@@ -43,6 +44,29 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
         }
         
         // stripe
+        try
+        {
+            var getTransactionsRequest = new GetTransactionsByOrderNumberRequest
+            {
+                Number = order.Number
+            };
+            
+            var result = await stripeHandler.GetTransactionsByOrderNumberAsync(getTransactionsRequest);
+            if (result.IsSuccess == false || result.Data is null)
+                return new Response<Order?>(null, 500, "Não foi possível localizar o pagamento");
+
+            if (result.Data.Any(x => x.Refunded))
+                return new Response<Order?>(null, 400, "Este pedido já teve o pagamento reembolsado");
+            
+            if (!result.Data.Any(x => x.Paid))
+                return new Response<Order?>(null, 400, "Este pedido não foi pago");
+
+            request.ExternalReference = result.Data[0].Id;
+        }
+        catch
+        {
+            return new Response<Order?>(null, 500, "Não foi possível dar baixa no pedido");
+        }
         
         order.Status = EOrderStatus.Paid;
         order.ExternalReference = request.ExternalReference;
