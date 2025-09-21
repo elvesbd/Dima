@@ -19,6 +19,7 @@ bld/
 
 # Visual Studio Code
 .vscode/
+.idea/
 
 # User-specific files
 *.rsuser
